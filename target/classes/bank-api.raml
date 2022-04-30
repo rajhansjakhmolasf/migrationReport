@@ -1,0 +1,40 @@
+#%RAML 1.0
+title: rajhans-testing
+version: v1
+baseUri: https://{myhost}:{port}/{version}/api
+documentation:
+  - title: Home
+    content: |
+     This is a test API
+
+/health:
+  description:  check if api is up and running
+  post:
+    body:
+      application/json:
+    responses:
+          201:
+                body:
+                      application/json:
+                                
+  get:
+    headers:
+      name : 
+        type : string
+        required: true
+      test : string
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {"status" : "success" }
+      500:
+        body:
+          application/json:
+            example:
+              {"status" : "failed. retry later."}
+        
+  
+
+
