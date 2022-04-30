@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+
+    <flow name="choice-router">
+        <choice doc:name="Choice - check region">
+            <when expression="#[payload.region == 'ASIA']">
+                <logger message="ASIA region" level="INFO" doc:name="Logger - ASIA" />
+            </when>
+            <otherwise>
+                <logger level="INFO" doc:name="Logger - NON ASIA" />
+            </otherwise>
+        </choice>
+
+    </flow>
+
+    <flow name="scatter-gather">
+        <scatter-gather doc:name="Scatter-Gather" timeout="3000">
+            <!--Migration INFO: Threading Profile is no longer needed in Mule 4.-->
+            <!--    For more information refer to:-->
+            <!--        * https://docs.mulesoft.com/mule-runtime/4.3/intro-engine-->
+            <!--<threading-profile xmlns="http://www.mulesoft.org/schema/mule/core" maxThreadsActive="1" maxThreadsIdle="1" threadTTL="200" poolExhaustedAction="RUN" threadWaitTimeout="3000" />-->
+            <route>
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json  
+---
+payload ++ {
+  age: "30"
+}]]></ee:set-payload>
+                    </ee:message>
+                </ee:transform>
+            </route>
+            <route>
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json  
+---
+payload ++ {
+  company: "Mulesoft"
+}]]></ee:set-payload>
+                    </ee:message>
+                </ee:transform>
+            </route>
+        </scatter-gather>
+
+    </flow>
+
+    <flow name="for-each">
+        <ee:transform doc:name="empty record">
+            <ee:variables>
+                <ee:set-variable variableName="record">%dw 2.0
+output application/java  
+---
+[]</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+
+        <foreach doc:name="For Each">
+            <logger message="#[&quot;for each record for counter $(vars.counter) is $(payload)&quot;]" level="INFO" doc:name="Logger  record" />
+            <ee:transform doc:name="concat">
+                <ee:variables>
+                    <ee:set-variable variableName="record">%dw 2.0
+output application/java  
+---
+vars.record ++ payload</ee:set-variable>
+                </ee:variables>
+            </ee:transform>
+        </foreach>
+
+        <ee:transform doc:name="final payload">
+            <ee:message>
+                <ee:set-payload>%dw 2.0
+output application/json  
+---
+vars.record</ee:set-payload>
+            </ee:message>
+        </ee:transform>
+
+    </flow>
+
+</mule>

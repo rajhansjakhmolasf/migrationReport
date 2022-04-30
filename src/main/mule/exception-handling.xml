@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:compatibility="http://www.mulesoft.org/schema/mule/compatibility" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/compatibility http://www.mulesoft.org/schema/mule/compatibility/current/mule-compatibility.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+
+    <error-handler name="exception-handlingChoice_Exception_Strategy">
+        <on-error-continue when="#[payload.error contains '400']" doc:name="Catch Exception Strategy - 400">
+            <logger message="#[&quot;400- not found $(mel:message.exception.getMessage()) $(mel:message.exception.getException()) $(mel:message.exception.getInfo())&quot;]" level="INFO" doc:name="Logger - not found">
+                <!--Migration WARN: The MEL expression could not be migrated to a DataWeave expression.-->
+                <!--    For more information refer to:-->
+                <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+                <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#mel_expressions-->
+                <!--        * https://blogs.mulesoft.com/dev/mule-dev/why-dataweave-main-expression-language-mule-4-->
+                <!--Migration WARN: The MEL expression contains a method invocation that could not be migrated to a Dataweave expression.-->
+                <!--    For more information refer to:-->
+                <!--        * https://docs.mulesoft.com/mule-runtime/4.3/dataweave-cookbook-java-methods-->
+                <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+            </logger>
+            <ee:transform doc:name="Transform Message">
+                <ee:message>
+                    <ee:set-payload><![CDATA[%dw 2.0
+output application/json  
+---
+{
+  message: "404 - not found"
+}]]></ee:set-payload>
+                </ee:message>
+                <ee:variables>
+                    <ee:set-variable variableName="http.status">%dw 2.0
+output application/java  
+---
+400</ee:set-variable>
+                </ee:variables>
+            </ee:transform>
+            <compatibility:set-property propertyName="http.status" value="#[vars.http.status]">
+                <!--Migration WARN: Instead of setting outbound properties in the flow, you must set Mule 4 variables.-->
+                <!--    For more information refer to:-->
+                <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#outbound_properties-->
+            </compatibility:set-property>
+        </on-error-continue>
+        <on-error-continue doc:name="Catch Exception Strategy" when="#[payload.name contains 'raj']">
+            <logger message="#[&quot;generic error  $(mel:message.exception.getMessage()) $(mel:message.exception.getException()) $(mel:message.exception.getInfo())&quot;]" level="INFO" doc:name="Logger - generic">
+                <!--Migration WARN: The MEL expression could not be migrated to a DataWeave expression.-->
+                <!--    For more information refer to:-->
+                <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+                <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#mel_expressions-->
+                <!--        * https://blogs.mulesoft.com/dev/mule-dev/why-dataweave-main-expression-language-mule-4-->
+                <!--Migration WARN: The MEL expression contains a method invocation that could not be migrated to a Dataweave expression.-->
+                <!--    For more information refer to:-->
+                <!--        * https://docs.mulesoft.com/mule-runtime/4.3/dataweave-cookbook-java-methods-->
+                <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+            </logger>
+            <ee:transform doc:name="Transform Message">
+                <ee:message>
+                    <ee:set-payload><![CDATA[%dw 2.0
+output application/json  
+---
+{
+  message: "500 - internal server error"
+}]]></ee:set-payload>
+                </ee:message>
+                <ee:variables>
+                    <ee:set-variable variableName="http.status">%dw 2.0
+output application/java  
+---
+500</ee:set-variable>
+                </ee:variables>
+            </ee:transform>
+            <compatibility:set-property propertyName="http.status" value="#[vars.http.status]">
+                <!--Migration WARN: Instead of setting outbound properties in the flow, you must set Mule 4 variables.-->
+                <!--    For more information refer to:-->
+                <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#outbound_properties-->
+            </compatibility:set-property>
+        </on-error-continue>
+        <on-error-propagate doc:name="Rollback Exception Strategy">
+            <logger message="#[&quot;rollback -  $(mel:message.exception.getMessage()) $(mel:message.exception.getException()) $(mel:message.exception.getInfo())&quot;]" level="INFO" doc:name="Logger - rollback">
+                <!--Migration WARN: The MEL expression could not be migrated to a DataWeave expression.-->
+                <!--    For more information refer to:-->
+                <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+                <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#mel_expressions-->
+                <!--        * https://blogs.mulesoft.com/dev/mule-dev/why-dataweave-main-expression-language-mule-4-->
+                <!--Migration WARN: The MEL expression contains a method invocation that could not be migrated to a Dataweave expression.-->
+                <!--    For more information refer to:-->
+                <!--        * https://docs.mulesoft.com/mule-runtime/4.3/dataweave-cookbook-java-methods-->
+                <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+            </logger>
+        </on-error-propagate>
+    </error-handler>
+
+</mule>

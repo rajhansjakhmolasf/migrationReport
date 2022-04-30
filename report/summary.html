@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Mule Migration Assistant Report</title>
+    <link rel="stylesheet" type="text/css" href="assets/styles/mulesoft-styles.css">
+    <link rel="stylesheet" type="text/css" href="assets/styles/tsorter.css">
+</head>
+<body>
+<div class="mulesoft-topbar">
+    <div class="mulesoft-appbar">
+        <div class="muleicon muleicon-logo"></div>
+        <div class="anypoint-brand">Mule Migration Assistant 1.2.0</div>
+    </div>
+</div>
+<div class="col-md-8">
+    <h4>Issues found during migration:</h2>
+</div>
+    <div class="col-md-8 col-md-offset-1">
+        <h2 class="text-bold">Errors:</h2>
+        <table id="resources_table" class="table table-featured table-hover sortable">
+                <thead>
+                <tr>
+                    <th colspan="2" data-tsorter="link">Resource</th>
+                    <th data-tsorter="numeric"># Issues</th>
+                </tr>
+                </thead>
+                <tbody id="table-body">
+                        <tbody class="labels">
+                            <tr>
+                                <td colspan="2">
+                                    <a><label for="error-expression.xml">expression.xml</label></a>
+                                    <input type="checkbox" name="error-expression.xml" id="error-expression.xml" data-toggle="toggle">
+                                </td>
+                                <td>1</td>
+                            </tr>
+                        </tbody>
+                        <tbody class="hide" style="display: none">
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/error-expression-0.html>- Replace expressions that use 'inboundAttachments' with DataWeave selectors for handling multipart formats.</a>
+                                        </td>
+                                        <td>1</td>
+                                    </tr>
+                        </tbody>
+                        <tbody class="labels">
+                            <tr>
+                                <td colspan="2">
+                                    <a><label for="error-java.xml">java.xml</label></a>
+                                    <input type="checkbox" name="error-java.xml" id="error-java.xml" data-toggle="toggle">
+                                </td>
+                                <td>1</td>
+                            </tr>
+                        </tbody>
+                        <tbody class="hide" style="display: none">
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/error-java-0.html>- Element 'custom-transformer' which relied on Java no longer exists in Mule 4. Replace its uses with a new Mule 4 feature.</a>
+                                        </td>
+                                        <td>1</td>
+                                    </tr>
+                        </tbody>
+                </tbody>
+            </table>
+    </div>
+    <div class="col-md-8 col-md-offset-1">
+        <h2 class="text-bold">Warnings:</h2>
+        <table id="resources_table" class="table table-featured table-hover sortable">
+                <thead>
+                <tr>
+                    <th colspan="2" data-tsorter="link">Resource</th>
+                    <th data-tsorter="numeric"># Issues</th>
+                </tr>
+                </thead>
+                <tbody id="table-body">
+                        <tbody class="labels">
+                            <tr>
+                                <td colspan="2">
+                                    <a><label for="warn-exception-handling.xml">exception-handling.xml</label></a>
+                                    <input type="checkbox" name="warn-exception-handling.xml" id="warn-exception-handling.xml" data-toggle="toggle">
+                                </td>
+                                <td>8</td>
+                            </tr>
+                        </tbody>
+                        <tbody class="hide" style="display: none">
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-exception-handling-0.html>- The MEL expression contains a method invocation that could not be migrated to a Dataweave expression.</a>
+                                        </td>
+                                        <td>3</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-exception-handling-1.html>- The MEL expression could not be migrated to a DataWeave expression.</a>
+                                        </td>
+                                        <td>3</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-exception-handling-2.html>- Instead of setting outbound properties in the flow, you must set Mule 4 variables.</a>
+                                        </td>
+                                        <td>2</td>
+                                    </tr>
+                        </tbody>
+                        <tbody class="labels">
+                            <tr>
+                                <td colspan="2">
+                                    <a><label for="warn-bank-api.xml">bank-api.xml</label></a>
+                                    <input type="checkbox" name="warn-bank-api.xml" id="warn-bank-api.xml" data-toggle="toggle">
+                                </td>
+                                <td>14</td>
+                            </tr>
+                        </tbody>
+                        <tbody class="hide" style="display: none">
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-bank-api-0.html>- Instead of using outbound properties in the flow, move the expression that sets the property into the XML attribute (such as 'method') of the operation or listener that accepts the expression.</a>
+                                        </td>
+                                        <td>7</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-bank-api-1.html>- consoleEnabled property do not exist in Mule 4.</a>
+                                        </td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-bank-api-2.html>- Expressions that query 'inboundProperties' from the message should instead query the message 'attributes'. Remove this component if there are no uses of 'inboundProperties' in expressions or components that rely on 'inboundProperties' (such as 'copy-properties').</a>
+                                        </td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-bank-api-3.html>- Avoid using an outbound property to determine the status code.</a>
+                                        </td>
+                                        <td>4</td>
+                                    </tr>
+                        </tbody>
+                        <tbody class="labels">
+                            <tr>
+                                <td colspan="2">
+                                    <a><label for="warn-vm.xml">vm.xml</label></a>
+                                    <input type="checkbox" name="warn-vm.xml" id="warn-vm.xml" data-toggle="toggle">
+                                </td>
+                                <td>5</td>
+                            </tr>
+                        </tbody>
+                        <tbody class="hide" style="display: none">
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-vm-0.html>- You can remove this if this flow is not using 'sessionVariables' or after migrating them to variables.</a>
+                                        </td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-vm-1.html>- Expressions that query 'inboundProperties' from the message should instead query the message 'attributes'. Remove this component if there are no uses of 'inboundProperties' in expressions or components that rely on 'inboundProperties' (such as 'copy-properties').</a>
+                                        </td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-vm-2.html>- Instead of using outbound properties in the flow, move the expression that sets the property into the XML attribute (such as 'method') of the operation or listener that accepts the expression.</a>
+                                        </td>
+                                        <td>1</td>
+                                    </tr>
+                        </tbody>
+                        <tbody class="labels">
+                            <tr>
+                                <td colspan="2">
+                                    <a><label for="warn-http-requester.xml">http-requester.xml</label></a>
+                                    <input type="checkbox" name="warn-http-requester.xml" id="warn-http-requester.xml" data-toggle="toggle">
+                                </td>
+                                <td>4</td>
+                            </tr>
+                        </tbody>
+                        <tbody class="hide" style="display: none">
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-http-requester-0.html>- Instead of using outbound properties in the flow, move the expression that sets the property into the XML attribute (such as 'method') of the operation or listener that accepts the expression.</a>
+                                        </td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-http-requester-1.html>- Expressions that query 'inboundProperties' from the message should instead query the message 'attributes'. Remove this component if there are no uses of 'inboundProperties' in expressions or components that rely on 'inboundProperties' (such as 'copy-properties').</a>
+                                        </td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-http-requester-2.html>- Build the 'query-params' map with a single DataWeave expression.</a>
+                                        </td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-http-requester-3.html>- Build the 'uri-params' map with a single DataWeave expression.</a>
+                                        </td>
+                                        <td>1</td>
+                                    </tr>
+                        </tbody>
+                        <tbody class="labels">
+                            <tr>
+                                <td colspan="2">
+                                    <a><label for="warn-dataweave.xml">dataweave.xml</label></a>
+                                    <input type="checkbox" name="warn-dataweave.xml" id="warn-dataweave.xml" data-toggle="toggle">
+                                </td>
+                                <td>5</td>
+                            </tr>
+                        </tbody>
+                        <tbody class="hide" style="display: none">
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-dataweave-0.html>- Instead of using session variables in the flow, use variables.</a>
+                                        </td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-dataweave-1.html>- Instead of setting outbound properties in the flow, you must set Mule 4 variables.</a>
+                                        </td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-dataweave-2.html>- Instead of setting session variables in the flow, you must set Mule 4 variables.</a>
+                                        </td>
+                                        <td>1</td>
+                                    </tr>
+                        </tbody>
+                        <tbody class="labels">
+                            <tr>
+                                <td colspan="2">
+                                    <a><label for="warn-expression.xml">expression.xml</label></a>
+                                    <input type="checkbox" name="warn-expression.xml" id="warn-expression.xml" data-toggle="toggle">
+                                </td>
+                                <td>9</td>
+                            </tr>
+                        </tbody>
+                        <tbody class="hide" style="display: none">
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-expression-0.html>- The MEL expression contains a method invocation that could not be migrated to a Dataweave expression.</a>
+                                        </td>
+                                        <td>3</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href=resources/warn-expression-1.html>- The MEL expression could not be migrated to a DataWeave expression.</a>
+                                        </td>
+                                        <td>6</td>
+                                    </tr>
+                        </tbody>
+                </tbody>
+            </table>
+    </div>
+    <div class="col-md-8 col-md-offset-1">
+            <h2 class="text-bold">Info:</h2>
+            <table id="resources_table" class="table table-featured table-hover sortable">
+                    <thead>
+                    <tr>
+                        <th colspan="2" data-tsorter="link">Resource</th>
+                        <th data-tsorter="numeric"># Issues</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table-body">
+                            <tbody class="labels">
+                                <tr>
+                                    <td colspan="2">
+                                        <a><label for="info-health-check.xml">health-check.xml</label></a>
+                                        <input type="checkbox" name="warn-health-check.xml" id="info-health-check.xml" data-toggle="toggle">
+                                    </td>
+                                    <td>1</td>
+                                </tr>
+                            </tbody>
+                            <tbody class="hide" style="display: none">
+                                        <tr>
+                                            <td colspan="2">
+                                                <a href=resources/info-health-check-0.html>- Threading Profile is no longer needed in Mule 4.</a>
+                                            </td>
+                                            <td>1</td>
+                                        </tr>
+                            </tbody>
+                    </tbody>
+                </table>
+        </div>
+
+    <script type="text/javascript" src="assets/js/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+         $('[data-toggle="toggle"]').change(function(){
+            $(this).parents().next('.hide').toggle();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+
+    <configuration-properties file="${mule.env}.properties" />
+
+    <configuration defaultExceptionStrategy-ref="exception-handlingChoice_Exception_Strategy" doc:name="Configuration" />
+
+    <global-property name="hello" value="hello-world" doc:name="Global Property" />
+
+    <asynchronous-processing-strategy name="Asynchronous_Processing_Strategy" maxThreads="4" minThreads="1" threadTTL="2000" doc:name="Asynchronous Processing Strategy" />
+
+    <global-property name="mule.env" value="dev" doc:name="Global Property" />
+
+</mule>

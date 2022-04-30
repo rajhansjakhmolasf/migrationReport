@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:compatibility="http://www.mulesoft.org/schema/mule/compatibility" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd http://www.mulesoft.org/schema/mule/compatibility http://www.mulesoft.org/schema/mule/compatibility/current/mule-compatibility.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+
+    <flow name="dataweaveFlow">
+        <ee:transform doc:name="dataweave">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json  
+var name = "Rajhans Jakhmola"
+var a = [
+  [1, 2],
+  [3, 4],
+  [5, 6]
+]
+fun myname(fullName) =
+  fullName splitBy " "
+---
+{
+  firstName: (myname(name))[0],
+  lastName: (myname(name))[1],
+  flat: flatten(a),
+  email: lower("RAJHAnsJakhmola@gmail.com"),
+  condition: 
+    if ((name contains "Raj"))
+      "Raj"
+    else if ((name contains ","))
+      ("Jakhmola")
+    else
+      "",
+  concat: "raj" ++ "hans",
+  strings: name[0 to 5] ++ name[6 to 10]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+
+        <ee:transform doc:name="outbound property">
+            <ee:variables>
+                <ee:set-variable variableName="user"><![CDATA[%dw 2.0
+output application/java  
+---
+"rajhans jakhmola"]]></ee:set-variable>
+                <ee:set-variable variableName="http.status">%dw 2.0
+output application/java  
+---
+200</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+
+        <compatibility:set-property propertyName="http.status" value="#[vars.http.status]">
+            <!--Migration WARN: Instead of setting outbound properties in the flow, you must set Mule 4 variables.-->
+            <!--    For more information refer to:-->
+            <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#outbound_properties-->
+        </compatibility:set-property>
+
+        <compatibility:set-property propertyName="user" value="#[vars.user]">
+            <!--Migration WARN: Instead of setting outbound properties in the flow, you must set Mule 4 variables.-->
+            <!--    For more information refer to:-->
+            <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#outbound_properties-->
+        </compatibility:set-property>
+
+        <ee:transform doc:name="session var">
+            <ee:variables>
+                <ee:set-variable variableName="name"><![CDATA[%dw 2.0
+output application/java  
+---
+"my name"]]></ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+
+        <compatibility:set-session-variable variableName="name" value="#[vars.name]">
+            <!--Migration WARN: Instead of setting session variables in the flow, you must set Mule 4 variables.-->
+            <!--    For more information refer to:-->
+            <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#session_variables-->
+        </compatibility:set-session-variable>
+
+        <compatibility:set-session-variable variableName="hello" value="#['werewr']" doc:name="Session Variable">
+            <!--Migration WARN: Instead of using session variables in the flow, use variables.-->
+            <!--    For more information refer to:-->
+            <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#session_variables-->
+        </compatibility:set-session-variable>
+
+        <set-variable variableName="yoyo" value="#['hello']" doc:name="Record Variable" />
+
+        <compatibility:remove-session-variable variableName="hello" doc:name="Session Variable">
+            <!--Migration WARN: Instead of using session variables in the flow, use variables.-->
+            <!--    For more information refer to:-->
+            <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#session_variables-->
+        </compatibility:remove-session-variable>
+
+        <batch:remove-record-variable variableName="yoyo" doc:name="Record Variable" />
+
+    </flow>
+
+</mule>

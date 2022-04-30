@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+
+    <flow name="expressionFlow">
+        <logger message="#[vars.compatibility_inboundProperties.'name']" level="INFO" doc:name="Logger - inbound" />
+
+        <logger message="#[mel:xpath3('//root/element1')]" level="INFO" doc:name="Logger - xpath">
+            <!--Migration WARN: The MEL expression could not be migrated to a DataWeave expression.-->
+            <!--    For more information refer to:-->
+            <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+            <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#mel_expressions-->
+            <!--        * https://blogs.mulesoft.com/dev/mule-dev/why-dataweave-main-expression-language-mule-4-->
+            <!--Migration WARN: The MEL expression contains a method invocation that could not be migrated to a Dataweave expression.-->
+            <!--    For more information refer to:-->
+            <!--        * https://docs.mulesoft.com/mule-runtime/4.3/dataweave-cookbook-java-methods-->
+            <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+        </logger>
+
+        <logger message="#[write(payload) as String]" doc:name="Logger - as string" />
+
+        <set-payload doc:name="Expression" value="#[mel:($.value in  message.inboundAttachments.entrySet() if $.key ~= '(.*\\.txt|.*\\.xml)')]">
+            <!--Migration ERROR: Replace expressions that use 'inboundAttachments' with DataWeave selectors for handling multipart formats.-->
+            <!--    For more information refer to:-->
+            <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#inbound_attachments-->
+        </set-payload>
+
+        <logger message="#[mel:payload is NullPayload]" level="INFO" doc:name="Logger - check null paylaod">
+            <!--Migration WARN: The MEL expression could not be migrated to a DataWeave expression.-->
+            <!--    For more information refer to:-->
+            <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+            <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#mel_expressions-->
+            <!--        * https://blogs.mulesoft.com/dev/mule-dev/why-dataweave-main-expression-language-mule-4-->
+        </logger>
+
+        <logger message="#[mel:java.util.UUID.randomUUID().toString()]" level="INFO" doc:name="Logger - UUID">
+            <!--Migration WARN: The MEL expression could not be migrated to a DataWeave expression.-->
+            <!--    For more information refer to:-->
+            <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+            <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#mel_expressions-->
+            <!--        * https://blogs.mulesoft.com/dev/mule-dev/why-dataweave-main-expression-language-mule-4-->
+        </logger>
+
+    </flow>
+
+    <flow name="transformers">
+        <byte-array-to-object-transformer doc:name="Byte Array to Object" />
+
+        <ee:transform doc:name="JSON to Object">
+            <ee:message>
+                <ee:set-payload>%dw 2.0 output application/java --- payload</ee:set-payload>
+            </ee:message>
+        </ee:transform>
+
+    </flow>
+
+    <flow name="regex">
+        <logger message="#[mel:regex('^(To|From|Cc):')]" level="INFO" doc:name="Logger - find email cc">
+            <!--Migration WARN: The MEL expression could not be migrated to a DataWeave expression.-->
+            <!--    For more information refer to:-->
+            <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+            <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#mel_expressions-->
+            <!--        * https://blogs.mulesoft.com/dev/mule-dev/why-dataweave-main-expression-language-mule-4-->
+            <!--Migration WARN: The MEL expression contains a method invocation that could not be migrated to a Dataweave expression.-->
+            <!--    For more information refer to:-->
+            <!--        * https://docs.mulesoft.com/mule-runtime/4.3/dataweave-cookbook-java-methods-->
+            <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+        </logger>
+
+        <logger message="#[mel:regex(regularExpression [, melExpression [, matchFlags]])]" level="INFO" doc:name="Logger - match ">
+            <!--Migration WARN: The MEL expression could not be migrated to a DataWeave expression.-->
+            <!--    For more information refer to:-->
+            <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+            <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#mel_expressions-->
+            <!--        * https://blogs.mulesoft.com/dev/mule-dev/why-dataweave-main-expression-language-mule-4-->
+        </logger>
+
+    </flow>
+
+    <flow name="registery">
+        <logger message="#[mel:muleContext.getRegistry()]" level="INFO" doc:name="Logger - mule context">
+            <!--Migration WARN: The MEL expression could not be migrated to a DataWeave expression.-->
+            <!--    For more information refer to:-->
+            <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+            <!--        * https://github.com/mulesoft/mule-migration-assistant/blob/master/docs/user-docs/migration-tool-post-mig.adoc#mel_expressions-->
+            <!--        * https://blogs.mulesoft.com/dev/mule-dev/why-dataweave-main-expression-language-mule-4-->
+            <!--Migration WARN: The MEL expression contains a method invocation that could not be migrated to a Dataweave expression.-->
+            <!--    For more information refer to:-->
+            <!--        * https://docs.mulesoft.com/mule-runtime/4.3/dataweave-cookbook-java-methods-->
+            <!--        * https://docs.mulesoft.com/mule-runtime/4.3/migration-mel-->
+        </logger>
+
+        <logger message="#[vars.app.registry]" level="INFO" doc:name="Logger app registry" />
+
+    </flow>
+
+    <flow name="server-expression">
+        <logger message="#[&quot;$(now()) $(vars.server.osName) $(vars.server.locale)&quot;]" level="INFO" doc:name="Logger - server expression" />
+
+        <logger message="#[vars.mule.home]" level="INFO" doc:name="Logger - Mule" />
+
+        <logger message="#[&quot;$(vars.app.name) $(vars.app.registry)&quot;]" level="INFO" doc:name="Logger - application" />
+
+        <logger message="#[&quot;$(message.correlationId) $(correlationId) $(message.payload)&quot;]" level="INFO" doc:name="Logger - message" />
+
+    </flow>
+
+</mule>

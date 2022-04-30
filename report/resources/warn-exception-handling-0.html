@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Mule Migratiol Assistant Report</title>
+    <link rel="stylesheet" type="text/css" href="../assets/styles/mulesoft-styles.css">
+    <link rel="stylesheet" type="text/css" href="../assets/styles/tsorter.css">
+</head>
+<body>
+    <div class="mulesoft-topbar">
+        <div class="mulesoft-appbar">
+            <div class="muleicon muleicon-logo"></div>
+            <div class="anypoint-brand">Mule Migration Assistant 1.2.0</div>
+        </div>
+    </div>
+    <div class="col-md-2 col-md-offset-1 sidemenu">
+        <ul class="sidemenu-back">
+            <li><a href="../summary.html">Summary</a></li>
+        </ul>
+    </div>
+    <div class="col-md-8">
+        <h2 class="text-bold">Issues found on: <span class="text-italic text-normal">exception-handling.xml</span></h2>
+        <h4 class="text-bold">Description: <span class="text-italic text-normal">The MEL expression contains a method invocation that could not be migrated to a Dataweave expression.</span></h4>
+        <h4 class="text-bold">Documentation: </h4>
+            <h4><a href="https://docs.mulesoft.com/mule-runtime/4.3/dataweave-cookbook-java-methods">https://docs.mulesoft.com/mule-runtime/4.3/dataweave-cookbook-java-methods</a></h4>
+            <h4><a href="https://docs.mulesoft.com/mule-runtime/4.3/migration-mel">https://docs.mulesoft.com/mule-runtime/4.3/migration-mel</a></h4>
+        <hr>
+        <br>
+            <div class="col-md-12">
+                <h4 class="text-bold">
+                    Line: <span class="text-italic text-normal">74</span>&nbsp;
+                    Column: <span class="text-italic text-normal">213</span>
+                </h4>
+                <br>
+                <pre>&lt;logger message=&quot;rollback -  #[message.exception.getMessage()] #[message.exception.getException()] #[message.exception.getInfo()]&quot; level=&quot;INFO&quot; doc:name=&quot;Logger - rollback&quot; /&gt;</pre>
+                <hr>
+            </div>
+            <div class="col-md-12">
+                <h4 class="text-bold">
+                    Line: <span class="text-italic text-normal">6</span>&nbsp;
+                    Column: <span class="text-italic text-normal">217</span>
+                </h4>
+                <br>
+                <pre>&lt;logger message=&quot;400- not found #[message.exception.getMessage()] #[message.exception.getException()] #[message.exception.getInfo()]&quot; level=&quot;INFO&quot; doc:name=&quot;Logger - not found&quot; /&gt;</pre>
+                <hr>
+            </div>
+            <div class="col-md-12">
+                <h4 class="text-bold">
+                    Line: <span class="text-italic text-normal">40</span>&nbsp;
+                    Column: <span class="text-italic text-normal">215</span>
+                </h4>
+                <br>
+                <pre>&lt;logger message=&quot;generic error  #[message.exception.getMessage()] #[message.exception.getException()] #[message.exception.getInfo()]&quot; level=&quot;INFO&quot; doc:name=&quot;Logger - generic&quot; /&gt;</pre>
+                <hr>
+            </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+
+    <validation:config name="Validation_Configuration" doc:name="Validation Configuration" />
+
+    <flow name="validatorFlow">
+        <validation:is-empty-collection config-ref="Validation_Configuration" message="message is empty" value="22" doc:name="Validation" />
+
+        <json:validate-schema xmlns:json="http://www.mulesoft.org/schema/mule/json" schema="schema.json" doc:name="Validate JSON Schema" />
+
+    </flow>
+
+</mule>
